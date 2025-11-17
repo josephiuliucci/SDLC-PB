@@ -24,111 +24,219 @@ The SCADA platform will serve as a centralized hub for data acquisition, visuali
 
 ### 4.1 Data Acquisition & Connectivity
 
-1. **PLC and device connectivity** – *As a control engineer, I need the SCADA platform to connect to major PLCs and industrial devices via OPC UA and vendor drivers such as Modbus, TCP/UDP, BACnet, Allen‑Bradley and Siemens, so that I can acquire live data from plant‑floor equipment.*  Ignition provides drivers for Modbus, UDP & TCP, BACnet, Allen‑Bradley, Siemens and other PLCs【417854487715557†L22-L29】, enabling seamless data collection.
+The following requirements define how the SCADA platform acquires data and connects to industrial devices and databases.  Each requirement is paired with a user story that explains its value.
 
-2. **SQL and data sources** – *As a SCADA administrator, I want the platform to connect to any SQL database (MSSQL, Oracle, PostgreSQL, MySQL) and web services, so that I can read from or write to enterprise systems.*  The Ignition platform includes an OPC UA server and can talk to SQL databases【417854487715557†L22-L29】.
+- **Requirement – PLC and device connectivity:** The system shall connect to major PLCs and industrial devices via OPC UA and vendor drivers such as Modbus, TCP/UDP, BACnet, Allen‑Bradley and Siemens, enabling live data acquisition from plant‑floor equipment【417854487715557†L22-L29】.
 
-3. **Unlimited tags and connections** – *As an IT manager, I need the system to support unlimited tags, device connections and designer sessions without extra licensing costs, so that the solution can scale with plant growth.*  Ignition’s server‑centric model allows unlimited clients and tags【417854487715557†L31-L43】【417854487715557†L66-L70】.
+  **User Story:** *As a control engineer, I need the SCADA platform to connect to major PLCs and industrial devices via OPC UA and vendor drivers such as Modbus, TCP/UDP, BACnet, Allen‑Bradley and Siemens, so that I can acquire live data from plant‑floor equipment.*
 
-4. **Store and forward** – *As a network engineer, I want buffered store‑and‑forward functionality that caches data when network connectivity is lost and forwards it once connectivity is restored, so that no data is lost during outages.*  Ignition includes a store‑and‑forward engine that buffers data locally before writing to SQL databases【646938752162582†L218-L231】.  In version 8.3, store‑and‑forward includes improved caching and diagnostics【906305396111596†L53-L90】.
+- **Requirement – SQL and data sources:** The system shall connect to any SQL database (MSSQL, Oracle, PostgreSQL, MySQL) and web services to read from and write to enterprise systems【417854487715557†L22-L29】.
 
-5. **Event streaming** – *As a developer, I need the platform to publish data events to external brokers via Kafka or HTTP, so that other services can consume real‑time event streams.*  Ignition 8.3 introduces an Event Streams module for event‑driven data transfer, supporting Kafka and HTTP and providing subscription‑based updates【906305396111596†L53-L90】.
+  **User Story:** *As a SCADA administrator, I want the platform to connect to any SQL database and web services, so that I can exchange data with enterprise systems.*
+
+- **Requirement – Unlimited tags and connections:** The system shall support unlimited tags, device connections and designer sessions without additional licensing, ensuring scalability【417854487715557†L31-L43】【417854487715557†L66-L70】.
+
+  **User Story:** *As an IT manager, I need the system to support unlimited tags, device connections and designer sessions without extra licensing costs, so that the solution can scale with plant growth.*
+
+- **Requirement – Store and forward:** The system shall buffer data locally when network connectivity is lost and forward it when connectivity is restored, preventing data loss【646938752162582†L218-L231】【906305396111596†L53-L90】.
+
+  **User Story:** *As a network engineer, I want buffered store‑and‑forward functionality that caches data when network connectivity is lost and forwards it once connectivity is restored, so that no data is lost during outages.*
+
+- **Requirement – Event streaming:** The system shall publish data events to external brokers via Kafka or HTTP and provide subscription‑based updates【906305396111596†L53-L90】.
+
+  **User Story:** *As a developer, I need the platform to publish data events to external brokers via Kafka or HTTP, so that other services can consume real‑time event streams.*
 
 ### 4.2 Visualization & HMI
 
-1. **Web‑based responsive HMI** – *As a plant operator, I want to access dashboards from any modern web browser on desktop, tablet or mobile devices, so that I can monitor the process remotely.*  The Perspective module provides mobile‑responsive industrial applications that run in a browser【417854487715557†L31-L43】【646938752162582†L257-L269】.
+This section describes the visualization and human–machine interface capabilities required of the SCADA platform and pairs each requirement with a user story.
 
-2. **Desktop HMI** – *As a control engineer, I need a desktop‑based HMI for legacy systems, so that I can run full‑screen operator interfaces on dedicated workstations.*  The Vision module offers a Java‑based HMI and supports full‑screen mode【646938752162582†L236-L249】.
+- **Requirement – Web‑based responsive HMI:** The system shall provide a mobile‑responsive HMI accessible from modern web browsers on desktop, tablet or mobile devices, enabling remote monitoring【417854487715557†L31-L43】【646938752162582†L257-L269】.
 
-3. **Drawing and animation** – *As an HMI developer, I want to create custom graphics and animate shapes bound to tag values, so that the operator interface reflects the process accurately.*  Ignition 8.3 adds a native drawing editor for creating diagrams and animations and binding them to tag values【906305396111596†L95-L117】.
+  **User Story:** *As a plant operator, I want to access dashboards from any modern web browser on desktop, tablet or mobile devices, so that I can monitor the process remotely.*
 
-4. **Forms and offline mode** – *As an operator in the field, I want to enter data via forms and work offline if network connectivity is intermittent, so that I can capture observations and synchronize them later.*  The Perspective module includes a quick form generator and supports offline mode; data entered offline syncs when reconnected【906305396111596†L130-L142】.
+- **Requirement – Desktop HMI:** The system shall support a desktop‑based HMI for legacy systems with full‑screen operator interfaces【646938752162582†L236-L249】.
 
-5. **Report designer** – *As a process engineer, I need a report designer with charts and the ability to convert bitmap images to vector for scalable graphics, so that I can create professional reports.*  Ignition 8.3 enhances the reporting module with new chart options and raster‑to‑vector conversion【906305396111596†L118-L126】.
+  **User Story:** *As a control engineer, I need a desktop‑based HMI for legacy systems, so that I can run full‑screen operator interfaces on dedicated workstations.*
+
+- **Requirement – Drawing and animation:** The system shall include drawing tools for creating custom graphics and animating shapes bound to tag values【906305396111596†L95-L117】.
+
+  **User Story:** *As an HMI developer, I want to create custom graphics and animate shapes bound to tag values, so that the operator interface reflects the process accurately.*
+
+- **Requirement – Forms and offline mode:** The system shall allow operators to enter data via forms and work offline when network connectivity is intermittent, synchronizing data when reconnected【906305396111596†L130-L142】.
+
+  **User Story:** *As an operator in the field, I want to enter data via forms and work offline if network connectivity is intermittent, so that I can capture observations and synchronize them later.*
+
+- **Requirement – Report designer:** The system shall provide a report designer with charts and the ability to convert bitmap images to vector graphics for scalable reports【906305396111596†L118-L126】.
+
+  **User Story:** *As a process engineer, I need a report designer with charts and the ability to convert bitmap images to vector for scalable graphics, so that I can create professional reports.*
 
 ### 4.3 Historian & Data Storage
 
-1. **High‑performance historian** – *As a process engineer, I want a built‑in time‑series historian with zero configuration and high‑performance queries, so that I can store and analyze large volumes of process data efficiently.*  Ignition 8.3 introduces a built‑in Power Historian that collects time‑series data and provides a time‑series API for custom historians【906305396111596†L26-L40】.
+This section defines the historian and data‑storage requirements and pairs them with user stories.
 
-2. **Metadata and modeling** – *As a data modeler, I need the historian to capture metadata about equipment and measurements, so that I can organize and query historical data by context.*  Power Historian automatically models data and attaches metadata【906305396111596†L26-L40】.
+- **Requirement – High‑performance historian:** The system shall include a built‑in time‑series historian with zero configuration and high‑performance queries, along with a time‑series API for custom historians【906305396111596†L26-L40】.
+
+  **User Story:** *As a process engineer, I want a built‑in time‑series historian with zero configuration and high‑performance queries, so that I can store and analyze large volumes of process data efficiently.*
+
+- **Requirement – Metadata and modeling:** The system shall capture metadata about equipment and measurements and automatically model data to provide context for historical queries【906305396111596†L26-L40】.
+
+  **User Story:** *As a data modeler, I need the historian to capture metadata about equipment and measurements, so that I can organize and query historical data by context.*
 
 ### 4.4 Alarming & Notifications
 
-1. **Alarm configuration and escalation** – *As a control engineer, I want to configure alarms with priorities, setpoints and escalation rules, so that operators receive timely notifications when process limits are exceeded.*
+This section covers requirements for alarm configuration, notification and analysis.
 
-2. **Advanced notifications** – *As an operator, I want to receive alarm notifications via SMS, email, voice and messaging services (e.g., WhatsApp), so that I can respond quickly.*  Ignition 8.3 provides new alarm integrations including WhatsApp and Twilio Voice【906305396111596†L225-L233】.
+- **Requirement – Alarm configuration and escalation:** The system shall allow configuration of alarms with priorities, setpoints and escalation rules to ensure timely notifications.
 
-3. **Alarm aggregation and analysis** – *As a compliance manager, I need ISA‑18.2 compliant alarm statistics (count, duration, chattering) and aggregated overviews, so that I can evaluate system health and performance.*  The new alarm aggregation system in Ignition 8.3 provides statistics and ISA‑compliant tools【987429409847858†L204-L210】.
+  **User Story:** *As a control engineer, I want to configure alarms with priorities, setpoints and escalation rules, so that operators receive timely notifications when process limits are exceeded.*
+
+- **Requirement – Advanced notifications:** The system shall support sending alarm notifications via SMS, email, voice and messaging services (e.g., WhatsApp)【906305396111596†L225-L233】.
+
+  **User Story:** *As an operator, I want to receive alarm notifications via SMS, email, voice and messaging services (e.g., WhatsApp), so that I can respond quickly.*
+
+- **Requirement – Alarm aggregation and analysis:** The system shall provide ISA‑18.2 compliant alarm statistics (count, duration, chattering) and aggregated overviews to evaluate system health【987429409847858†L204-L210】.
+
+  **User Story:** *As a compliance manager, I need ISA‑18.2 compliant alarm statistics (count, duration, chattering) and aggregated overviews, so that I can evaluate system health and performance.*
 
 ### 4.5 Reporting & Analytics
 
-1. **Custom reports** – *As a process engineer, I need to define and schedule reports that include trends, tables and images, so that I can document process performance and share insights.*
+This section describes reporting and analytics capabilities.
 
-2. **Data export** – *As a data analyst, I want to export historical and real‑time data in standard formats (CSV, JSON), so that I can analyze it using external tools.*
+- **Requirement – Custom reports:** The system shall allow users to define and schedule reports that include trends, tables and images for documenting process performance.
 
-3. **Real‑time dashboards** – *As an operator, I need dashboards with configurable widgets (gauges, charts, bar graphs) that update in near‑real time, so that I can make informed decisions during production.*
+  **User Story:** *As a process engineer, I need to define and schedule reports that include trends, tables and images, so that I can document process performance and share insights.*
+
+- **Requirement – Data export:** The system shall provide the ability to export historical and real‑time data in standard formats (CSV, JSON).
+
+  **User Story:** *As a data analyst, I want to export historical and real‑time data in standard formats (CSV, JSON), so that I can analyze it using external tools.*
+
+- **Requirement – Real‑time dashboards:** The system shall provide configurable dashboards with widgets (gauges, charts, bar graphs) that update in near‑real time.
+
+  **User Story:** *As an operator, I need dashboards with configurable widgets (gauges, charts, bar graphs) that update in near‑real time, so that I can make informed decisions during production.*
 
 ### 4.6 Integration & Interoperability
 
-1. **APIs and scripting** – *As a developer, I want a Python‑based scripting environment and a REST API, so that I can automate tasks, integrate with external systems and extend functionality.*  Ignition’s open scripting environment and API support custom automation【417854487715557†L46-L63】.
+This section outlines integration and interoperability requirements.
 
-2. **MQTT and messaging** – *As an integration specialist, I want the platform to publish and subscribe to MQTT topics and support Sparkplug B, so that I can integrate with IIoT ecosystems.*  Ignition offers MQTT modules and can act as a gateway for Sparkplug messages (no specific citation but widely known; this statement is included based on general product knowledge).  
+- **Requirement – APIs and scripting:** The system shall provide a Python‑based scripting environment and a REST API for automating tasks, integrating with external systems and extending functionality【417854487715557†L46-L63】.
 
-3. **Enterprise system integration** – *As an enterprise architect, I need connectors for ERP, MES, historian and cloud services (AWS, Azure, SAP), so that data flows seamlessly between OT and IT.*
+  **User Story:** *As a developer, I want a Python‑based scripting environment and a REST API, so that I can automate tasks, integrate with external systems and extend functionality.*
 
-4. **File‑based configuration and source control** – *As a DevOps engineer, I want project configuration stored in JSON files and accessible via Git, so that I can manage changes through version control.*  Ignition 8.3 uses file‑based configuration storage ready for source control【987429409847858†L107-L174】.
+- **Requirement – MQTT and messaging:** The system shall support publishing and subscribing to MQTT topics and Sparkplug B to integrate with IIoT ecosystems.
+
+  **User Story:** *As an integration specialist, I want the platform to publish and subscribe to MQTT topics and support Sparkplug B, so that I can integrate with IIoT ecosystems.*
+
+- **Requirement – Enterprise system integration:** The system shall provide connectors for ERP, MES, historians and cloud services (AWS, Azure, SAP) to ensure seamless data flow between OT and IT.
+
+  **User Story:** *As an enterprise architect, I need connectors for ERP, MES, historians and cloud services, so that data flows seamlessly between OT and IT.*
+
+- **Requirement – File‑based configuration and source control:** The system shall store project configuration in JSON files and integrate with Git for source control【987429409847858†L107-L174】.
+
+  **User Story:** *As a DevOps engineer, I want project configuration stored in JSON files and accessible via Git, so that I can manage changes through version control.*
 
 ### 4.7 Security & Access Control
 
-1. **Encrypted transport** – *As a QA specialist, I need all communications to be encrypted using TLS 1.2 or higher, so that data integrity and confidentiality are preserved.*  Ignition supports TLS 1.2/1.3 encryption【417854487715557†L86-L100】.
+This section specifies security and access control requirements.
 
-2. **Authentication and SSO** – *As an IT administrator, I want to integrate with Active Directory and other federated identity providers with multi‑factor authentication (MFA) and single sign‑on (SSO), so that user management aligns with corporate policies.*  Ignition supports federated identity, MFA and SSO【417854487715557†L86-L100】.
+- **Requirement – Encrypted transport:** The system shall use TLS 1.2 or higher to encrypt all communications and ensure data integrity and confidentiality【417854487715557†L86-L100】.
 
-3. **Role‑based access control (RBAC)** – *As a security officer, I need to assign permissions at the project, tag and resource levels, so that users only access functions and data they are authorized to use.*  Ignition’s security model includes role‑based ACLs and audit logging【417854487715557†L86-L100】.
+  **User Story:** *As a QA specialist, I need all communications to be encrypted using TLS 1.2 or higher, so that data integrity and confidentiality are preserved.*
 
-4. **Secrets management** – *As a security engineer, I want passwords, certificates and API keys managed outside configuration files and integrated with external secret vaults, so that credentials are protected.*  Ignition 8.3 introduces a secrets management framework that removes secrets from configuration files and integrates with third‑party secret platforms【906305396111596†L192-L243】.
+- **Requirement – Authentication and SSO:** The system shall integrate with Active Directory and other federated identity providers, supporting multi‑factor authentication and single sign‑on【417854487715557†L86-L100】.
 
-5. **Audit logging** – *As a compliance manager, I need a tamper‑evident audit trail of user actions, configuration changes, alarms and report generation, so that I can reconstruct events and demonstrate compliance.*  Audit logging is built into the platform【417854487715557†L86-L100】.
+  **User Story:** *As an IT administrator, I want to integrate with Active Directory and other federated identity providers with multi‑factor authentication and SSO, so that user management aligns with corporate policies.*
+
+- **Requirement – Role‑based access control (RBAC):** The system shall allow assignment of roles and permissions at the project, tag and resource levels and enforce them, rejecting unauthorized actions【417854487715557†L86-L100】.
+
+  **User Story:** *As a security officer, I need to assign permissions at the project, tag and resource levels, so that users only access functions and data they are authorized to use.*
+
+- **Requirement – Secrets management:** The system shall manage passwords, certificates and API keys outside configuration files and integrate with external secret vaults【906305396111596†L192-L243】.
+
+  **User Story:** *As a security engineer, I want passwords, certificates and API keys managed outside configuration files and integrated with external secret vaults, so that credentials are protected.*
+
+- **Requirement – Audit logging:** The system shall record a tamper‑evident audit trail of user actions, configuration changes, alarms and report generation and retain logs for regulatory inspection【417854487715557†L86-L100】.
+
+  **User Story:** *As a compliance manager, I need a tamper‑evident audit trail of user actions, configuration changes, alarms and report generation, so that I can reconstruct events and demonstrate compliance.*
 
 ### 4.8 Reliability & Availability
 
-1. **Redundancy and failover** – *As an IT manager, I need the SCADA server to support redundant clustering and automatic failover, so that operations continue during hardware or software failures.*  Ignition supports redundancy and failover【417854487715557†L146-L152】.
+This section covers reliability and availability requirements.
 
-2. **Store‑and‑forward reliability** – *As a network engineer, I need store‑and‑forward to maintain data integrity during network outages and resume synchronization upon recovery, so that no data is lost.*  Ignition’s store‑and‑forward engine provides this buffering【646938752162582†L218-L231】 and has been enhanced with robust caching and diagnostics【906305396111596†L53-L90】.
+- **Requirement – Redundancy and failover:** The system shall support redundant clustering and automatic failover so that operations continue during hardware or software failures【417854487715557†L146-L152】.
 
-3. **Deployment modes** – *As a DevOps engineer, I want the ability to run separate development, test, staging and production environments with different resources, so that we can safely test changes before release.*  Ignition 8.3 introduces deployment modes and project resources for separate environments【987429409847858†L167-L175】.
+  **User Story:** *As an IT manager, I need the SCADA server to support redundant clustering and automatic failover, so that operations continue during hardware or software failures.*
+
+- **Requirement – Store‑and‑forward reliability:** The system shall maintain data integrity during network outages through store‑and‑forward and resume synchronization upon recovery【646938752162582†L218-L231】【906305396111596†L53-L90】.
+
+  **User Story:** *As a network engineer, I need store‑and‑forward to maintain data integrity during network outages and resume synchronization upon recovery, so that no data is lost.*
+
+- **Requirement – Deployment modes:** The system shall allow separate development, test, staging and production environments with distinct resources【987429409847858†L167-L175】.
+
+  **User Story:** *As a DevOps engineer, I want the ability to run separate development, test, staging and production environments with different resources, so that we can safely test changes before release.*
 
 ### 4.9 Deployment & Configuration
 
-1. **Cross‑platform support** – *As an infrastructure engineer, I want the platform to run on Windows, Linux and macOS with minimal hardware, so that I can deploy it on any industrial PC, virtual machine or container.*  Ignition runs cross‑platform and requires minimal hardware【417854487715557†L31-L43】.
+This section defines deployment and configuration requirements.
 
-2. **Containerization and quick launch** – *As a systems administrator, I need pre‑built Docker containers and quick‑launch installers, so that installation and upgrades are simple and reproducible.*  The modern gateway UI and quick‑launch containerization described for Ignition 8.3 support rapid deployment【987429409847858†L107-L174】.
+- **Requirement – Cross‑platform support:** The system shall run on Windows, Linux and macOS with minimal hardware【417854487715557†L31-L43】.
 
-3. **Gateway configuration UI** – *As an administrator, I want a user‑friendly gateway interface with integrated search, so that I can configure devices, projects, security and modules efficiently.*  Ignition 8.3 introduces a redesigned gateway configuration page with integrated search【987429409847858†L107-L174】.
+  **User Story:** *As an infrastructure engineer, I want the platform to run on Windows, Linux and macOS with minimal hardware, so that I can deploy it on any industrial PC, virtual machine or container.*
 
-4. **File‑based backup & restore** – *As an IT manager, I want the ability to back up configuration and projects via files and restore them across systems, so that I can quickly recover from failures and replicate environments.*
+- **Requirement – Containerization and quick launch:** The system shall provide pre‑built Docker containers and quick‑launch installers for simple installation and upgrades【987429409847858†L107-L174】.
+
+  **User Story:** *As a systems administrator, I need pre‑built Docker containers and quick‑launch installers, so that installation and upgrades are simple and reproducible.*
+
+- **Requirement – Gateway configuration UI:** The system shall provide a user‑friendly gateway interface with integrated search for configuring devices, projects, security and modules【987429409847858†L107-L174】.
+
+  **User Story:** *As an administrator, I want a user‑friendly gateway interface with integrated search, so that I can configure devices, projects, security and modules efficiently.*
+
+- **Requirement – File‑based backup & restore:** The system shall provide the ability to back up configuration and projects via files and restore them across systems for quick recovery and replication.
+
+  **User Story:** *As an IT manager, I want the ability to back up configuration and projects via files and restore them across systems, so that I can quickly recover from failures and replicate environments.*
 
 ### 4.10 Scalability & Performance
 
-1. **High throughput** – *As a system architect, I want the SCADA platform to handle thousands of devices and millions of tags while maintaining low latency (< 500 ms for control updates), so that production scales without degradation.*
+This section defines scalability and performance requirements.
 
-2. **Elastic load distribution** – *As an IT manager, I want to distribute workloads across multiple servers and containers, so that we can scale horizontally as demand increases.*
+- **Requirement – High throughput:** The system shall handle thousands of devices and millions of tags while maintaining low latency (e.g. < 500 ms for control updates).
+
+  **User Story:** *As a system architect, I want the SCADA platform to handle thousands of devices and millions of tags while maintaining low latency (< 500 ms for control updates), so that production scales without degradation.*
+
+- **Requirement – Elastic load distribution:** The system shall distribute workloads across multiple servers and containers to support horizontal scaling.
+
+  **User Story:** *As an IT manager, I want to distribute workloads across multiple servers and containers, so that we can scale horizontally as demand increases.*
 
 ### 4.11 Compliance & Data Integrity
 
-1. **Electronic records** – *As a QA specialist, I need the platform to handle electronic records and signatures in compliance with 21 CFR Part 11, ensuring that records are complete, accurate and readily retrievable.*
+This section lists compliance and data integrity requirements.
 
-2. **Data integrity (ALCOA principles)** – *As a QA reviewer, I need data to be attributable, legible, contemporaneous, original and accurate, with controlled timestamps and versioning, so that auditability is maintained.*
+- **Requirement – Electronic records:** The system shall handle electronic records and signatures in compliance with 21 CFR Part 11, ensuring completeness, accuracy and retrievability.
 
-3. **Regulatory audit trail** – *As a compliance manager, I want the audit trail to be tamper‑evident and to record who performed each action and when, so that we can reconstruct events for inspections.*
+  **User Story:** *As a QA specialist, I need the platform to handle electronic records and signatures in compliance with 21 CFR Part 11, ensuring that records are complete, accurate and readily retrievable.*
+
+- **Requirement – Data integrity (ALCOA principles):** The system shall ensure data is attributable, legible, contemporaneous, original and accurate, with controlled timestamps and versioning.
+
+  **User Story:** *As a QA reviewer, I need data to be attributable, legible, contemporaneous, original and accurate, with controlled timestamps and versioning, so that auditability is maintained.*
+
+- **Requirement – Regulatory audit trail:** The system shall provide a tamper‑evident audit trail that records who performed each action and when, supporting event reconstruction and inspections.
+
+  **User Story:** *As a compliance manager, I want the audit trail to be tamper‑evident and to record who performed each action and when, so that we can reconstruct events for inspections.*
 
 ### 4.12 Usability & Support
 
-1. **Documentation and training** – *As a project manager, I need comprehensive vendor documentation, tutorials and examples, so that my team can develop and maintain projects efficiently.*
+This section describes usability and support requirements.
 
-2. **Vendor support and maintenance** – *As a support lead, I want access to vendor support, updates and security patches, so that the SCADA platform remains secure and operational.*
+- **Requirement – Documentation and training:** The vendor shall provide comprehensive documentation, tutorials and examples for installation, configuration and development.
 
-3. **Community and third‑party modules** – *As a developer, I want to be able to leverage a marketplace of third‑party modules and share modules with other users, so that we can extend functionality without reinventing the wheel.*
+  **User Story:** *As a project manager, I need comprehensive vendor documentation, tutorials and examples, so that my team can develop and maintain projects efficiently.*
+
+- **Requirement – Vendor support and maintenance:** The vendor shall provide updates, security patches and support to ensure the platform remains secure and operational.
+
+  **User Story:** *As a support lead, I want access to vendor support, updates and security patches, so that the SCADA platform remains secure and operational.*
+
+- **Requirement – Community and third‑party modules:** The platform shall offer a marketplace or repository of third‑party modules and provide a means to share modules with other users.
+
+  **User Story:** *As a developer, I want to be able to leverage a marketplace of third‑party modules and share modules with other users, so that we can extend functionality without reinventing the wheel.*
 
 ## Non‑Functional Requirements
 
