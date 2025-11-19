@@ -1,0 +1,120 @@
+#!/usr/bin/env python3
+"""
+Minimal SENAITE Sample Creation Script
+Simple example of creating a sample via POST request
+"""
+
+import requests
+import json
+from datetime import datetime
+
+# Configuration
+SENAITE_URL = "http://localhost:8080/senaite"
+USERNAME = "admin"
+PASSWORD = "admin"
+
+# UIDs (obtained from previous searches or setup)
+CLIENT_UID = "53c4ff82b3964f2ebf7f98b39619b433"      # Happy Hills
+CONTACT_UID = "2a3e0310dead4b5eadfcee400b4283d3"     # Firstname Surname
+SAMPLE_TYPE_UID = "35a279d1daea47bf8dc1b2711b32d98c"  # Water
+ANALYSIS_UID_1 = "12af70d43dd3493c8c667124a4ee67ca"   # 0.5 um Particulate Count
+ANALYSIS_UID_2 = "71aa029021284aae8dde52d10fff4428"   # 5 um Particulate Count
+
+
+def create_sample(client_uid, contact_uid, sample_type_uid, analysis_uids, 
+                  remarks="", date_sampled=None):
+    """
+    Create a sample in SENAITE
+    
+    Args:
+        client_uid: Client UID
+        contact_uid: Contact UID (required)
+        sample_type_uid: Sample Type UID
+        analysis_uids: List of Analysis Service UIDs
+        remarks: Sample remarks/notes
+        date_sampled: Date sampled (YYYY-MM-DD format, defaults to today)
+    
+    Returns:
+        dict: Created sample data or None if failed
+    """
+    # Build the API URL
+    api_url = f"{SENAITE_URL}/@@API/senaite/v1/create"
+    
+    # Default date to today if not provided
+    if not date_sampled:
+        date_sampled = datetime.now().strftime("%Y-%m-%d")
+    
+    # Build the payload
+    payload = {
+        "Client": client_uid,
+        "Contact": contact_uid,
+        "SampleType": sample_type_uid,
+        "DateSampled": date_sampled,
+        "Analyses": analysis_uids,
+        "Remarks": remarks
+    }
+    
+    # Set up the request
+    params = {"portal_type": "AnalysisRequest"}
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    }
+    
+    # Make the POST request
+    try:
+        response = requests.post(
+            api_url,
+            params=params,
+            json=payload,
+            headers=headers,
+            auth=(USERNAME, PASSWORD)
+        )
+        
+        # Check for errors
+        response.raise_for_status()
+        
+        # Parse response
+        result = response.json()
+        
+        print(f"✅ Sample created successfully!")
+        print(f"   Sample ID: {result.get('title')}")
+        print(f"   UID: {result.get('uid')}")
+        print(f"   URL: {result.get('url')}")
+        
+        return result
+        
+    except requests.exceptions.HTTPError as e:
+        print(f"❌ HTTP Error: {e}")
+        print(f"   Response: {e.response.text}")
+        return None
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        return None
+
+
+def main():
+    """Main function"""
+    print("Creating SENAITE Sample...")
+    print("-" * 60)
+    
+    # Create a single sample
+    sample = create_sample(
+        client_uid=CLIENT_UID,
+        contact_uid=CONTACT_UID,
+        sample_type_uid=SAMPLE_TYPE_UID,
+        analysis_uids=[ANALYSIS_UID_1, ANALYSIS_UID_2],
+        remarks="Non-viable air monitoring - Room 101",
+        date_sampled="2025-11-19"
+    )
+    
+    if sample:
+        print("\n✅ Success!")
+        print(f"\nSample Details:")
+        print(json.dumps(sample, indent=2))
+    else:
+        print("\n❌ Failed to create sample")
+
+
+if __name__ == "__main__":
+    main()
