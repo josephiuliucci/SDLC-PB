@@ -1,0 +1,80 @@
+flowchart LR
+  %% Business Systems
+  subgraph ORA["Oracle Fusion (Business Domain)"]
+    ERP["Oracle Fusion ERP"]
+    WMS["Oracle Fusion WMS"]
+  end
+
+  %% Integration Layer
+  subgraph INT["Integration / Event Gateway"]
+    O2E["Oracle → Event Adapter\n(APIs/Events → Canonical)"]
+    E2O["Event → Oracle Adapter\n(Canonical → Transactions)"]
+    SCHEMA["Schema Registry / Contracts\n(versioned canonical events)"]
+  end
+
+  %% Event Backbone
+  subgraph MQ["MQTT Event Backbone"]
+    BROKER["MQTT Broker Cluster\n(TLS, ACLs, QoS, DLQ)"]
+  end
+
+  %% Warehouse Control & Execution
+  subgraph WARE["Warehouse Execution / Control"]
+    WCS["Jungheinrich WCS\n(or equivalent)"]
+    VIS["Ops Visualization / HMI\n(warehouse views, KPIs)"]
+  end
+
+  %% Edge & Devices
+  subgraph EDGE["Edge + Identification"]
+    ZEBRA["Zebra Scanners/Printers\n(barcode scan, label print)"]
+    RFID["RFID Readers/Gates\n(tag reads, zone presence)"]
+  end
+
+  %% Automation
+  subgraph AUTO["Automation / Material Handling"]
+    ASRS["ASRS / Shuttles / Cranes"]
+    CONV["Conveyors / Diverts"]
+    AGV["AGVs / AMRs / Carts"]
+    PLC["PLCs / Controllers"]
+  end
+
+  %% Analytics/Archive
+  subgraph OBS["Observability / Analytics"]
+    HIST["Event Archive / Historian\n(time-series + event store)"]
+    SIEM["Security & Audit Logging"]
+  end
+
+  %% Flows: Oracle → MQTT
+  ERP -->|orders, inventory, master data| O2E
+  WMS -->|waves, tasks, allocations| O2E
+  O2E -->|publish canonical events| BROKER
+  SCHEMA <-->|validate & version| O2E
+
+  %% Flows: MQTT → WCS, Edge, Visualization
+  BROKER -->|subscribe: work released| WCS
+  BROKER -->|subscribe: events for UI| VIS
+
+  %% WCS → Automation commands (often not MQTT; could be OPC UA / fieldbus)
+  WCS -->|missions/tasks/commands| PLC
+  PLC --> ASRS
+  PLC --> CONV
+  PLC --> AGV
+
+  %% Edge publishes operational events
+  ZEBRA -->|barcode.scanned, label.printed| BROKER
+  RFID -->|rfid.read, zone.entered| BROKER
+
+  %% Automation publishes state/events (via gateways)
+  PLC -->|equipment.state, alarms, cycles| BROKER
+
+  %% WCS publishes execution confirmations
+  WCS -->|task.started/completed/failed\ninventory.moved| BROKER
+
+  %% MQTT → Oracle updates
+  BROKER -->|subscribe: confirmations| E2O
+  E2O -->|inventory issue/receipt,\nshipment confirm, adjustments| WMS
+  E2O --> ERP
+  SCHEMA <-->|validate & version| E2O
+
+  %% Observability subscribers
+  BROKER -->|subscribe all events| HIST
+  BROKER -->|audit/security signals| SIEM
