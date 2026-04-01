@@ -438,7 +438,7 @@ These tags provide static or slow-changing reference information useful for enri
 
 | Consumer | Events Subscribed | Filter / Transformation |
 |----------|-------------------|------------------------|
-| Manufacturing Record | `Sample.Analyzed` | Filter to required metrics. Enrich with MES batch context. Write to batch record. |
+| Manufacturing Record | `Sample.Analyzed` | Filter to required metrics. Enrich with MES batch context. Write into batch record. |
 | MSAT / Process Development | `Sample.Analyzed` | Filter to required metrics. Enrich with process step context. Feed trend analysis. |
 | QC / QA | `Sample.Analyzed`, `QC.Analyzed`, `Parameter.AlertChanged`, `Calibration.StatusChanged` | Full panel. Full instrument state context. Supports disposition and audit readiness. |
 | Data Lake / Historian | All events | No filter. Full payload. Historization and ad-hoc analysis. |
@@ -468,13 +468,13 @@ A single `Sample.Analyzed` event connects to the following instrument-state cont
 
 ## 8. Implementation Phases
 
-### Phase 1 (MVP): Analytical Results via OPC
+### Phase 1: Analytical Results via OPC
 
 - Ignition OPC UA client subscribes to FLEX2 Bridge OPC server
 - Event Streams trigger on `HistoricalSampleResults->SampleTime` and `QCResults->SampleTime` changes
 - On change, read full result tag trees, assemble and publish `Sample.Analyzed` and `QC.Analyzed`
 - Include consumable state snapshot (lot numbers, calibration status) in each event for genealogy
-- Configure consumer flows for PS (pH filter), MSAT (VCD filter), LIMS, and full-panel consumers
+- Optional: Configure consumer-specific flows
 
 ### Phase 2: Instrument State Events via OPC Change Detection
 
@@ -490,24 +490,7 @@ A single `Sample.Analyzed` event connects to the following instrument-state cont
 
 ---
 
-## 9. Open Items
-
-| # | Item | Owner | Status |
-|---|------|-------|--------|
-| 1 | Obtain OPC license from Nova Biomedical | Procurement | Not started |
-| 2 | Confirm OPC UA endpoint accessibility from Ignition server network segment | Engineering | Not started |
-| 3 | Validate Ignition Event Streams tag-change subscription behavior against FLEX2 OPC UA server — confirm that Event Streams can reliably detect `SampleTime` updates and trigger event assembly | Engineering | Not started |
-| 4 | Determine optimal subscription/polling configuration for state-derived events (consumable lots, calibration status, alert booleans) — balance between responsiveness and OPC server load | Engineering | Not started |
-| 5 | Confirm whether the `HistoricalSampleResults` tags update atomically (all tags update together) or if there's a race condition risk where Ignition reads a partial result set during tag updates | Engineering | Not started |
-| 6 | Validate parameter dependency chains in QC Lockout against live instrument behavior | QC | Not started |
-| 7 | Establish Analyzer ID naming convention for multi-instrument sites | All | Not started |
-| 8 | Define LIMS inbound interface for FLEX2 results | LIMS | Not started |
-| 9 | Determine if Phase 1 consumable state snapshot at sample time provides sufficient genealogy fidelity, or if Phase 2 discrete change events are needed for audit | QC / QA | Not started |
-| 10 | Evaluate OPC Server Version 4.1 Calculation Items feature — can custom calculated tags (Section 7 of PN 60644) simplify Ignition logic for derived fields like `overall_pass`? | Engineering | Not started |
-
----
-
-## 10. Revision History
+## 9. Revision History
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
