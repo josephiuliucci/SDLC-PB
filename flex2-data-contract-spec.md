@@ -1,9 +1,10 @@
 # Nova Biomedical Bioprofile FLEX2 — Publisher Data Contract Specification
 
 **Version:** 0.3 DRAFT  
-**Date:** 2026-04-01  
+**Date:** 01APR2026  
 **Status:** For review  
 **Source documentation:**
+- Workshop Output (Lucid)
 - BioProfile FLEX2 IFU (PN 57960 Rev F, March 2023)
 - BioProfile FLEX2 OPC Server IFU (PN 60644 Rev B, March 2024)
 
@@ -72,35 +73,35 @@ The following data is **not available via OPC** and requires CSV log export from
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                        FLEX2 Bridge Computer                           │
-│                                                                        │
-│   OPC UA Server (port 59888)          C:\Export\ (CSV logs)           │
-│   ├── OPCSystemObjects                ├── Results/                    │
-│   │   ├── HistoricalSampleResults     │   ├── SampleResultsYYYY-MM.csv│
-│   │   ├── QCResults                   │   └── QCResultsYYYY-MM.csv   │
-│   │   ├── *Card / *PackStatus         ├── Logs/                      │
-│   │   ├── Parameters->*.Alert         │   └── MaintenanceLog*.csv    │
-│   │   └── DP_*Cal->CalibrationStatus  ├── AuditableAction*.csv       │
-│   └── OPCSystemCommands               ├── CalibrationLog*.csv        │
-│       ├── ChemistryCalibration        └── Errors*.csv                │
-│       ├── GasCalibration                                              │
-│       └── *QcLevel*                                                   │
-└────────────┬──────────────────────────────────┬───────────────────────┘
+│                        FLEX2 Bridge Computer                            │
+│                                                                         │
+│   OPC UA Server (port 59888)          C:\Export\ (CSV logs)             │
+│   ├── OPCSystemObjects                ├── Results/                      │
+│   │   ├── HistoricalSampleResults     │   ├── SampleResultsYYYY-MM.csv  │
+│   │   ├── QCResults                   │   └── QCResultsYYYY-MM.csv      │
+│   │   ├── *Card / *PackStatus         ├── Logs/                         │
+│   │   ├── Parameters->*.Alert         │   └── MaintenanceLog*.csv       │
+│   │   └── DP_*Cal->CalibrationStatus  ├── AuditableAction*.csv          │
+│   └── OPCSystemCommands               ├── CalibrationLog*.csv           │
+│       ├── ChemistryCalibration        └── Errors*.csv                   │
+│       ├── GasCalibration                                                │
+│       └── *QcLevel*                                                     │
+└────────────┬──────────────────────────────────┬─────────────────────────┘
              │ OPC UA subscription              │ File watch (optional)
              ▼                                  ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                   Ignition (Event Streams)                             │
-│   • OPC UA client subscribes to FLEX2 Bridge                          │
-│   • Event Streams detect value transitions on state tags              │
-│   • Converts state changes into discrete canonical events             │
-│   • Enrichment with MES batch/lot context, LIMS sample linkage        │
-│   • Consumer-specific filtering and transformation                    │
+│                   Ignition (Event Streams)                              │
+│   • OPC UA client subscribes to FLEX2 Bridge                            │
+│   • Event Streams detect value transitions on state tags                │
+│   • Converts state changes into discrete canonical events               │
+│   • Enrichment with MES batch/lot context, LIMS sample linkage          │
+│   • Consumer-specific filtering and transformation                      │
 └────────────────────────────────┬────────────────────────────────────────┘
                                  │ Publish
                                  ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                          MQTT Broker                                   │
-│   {org}/{site}/analytical/flex2-{analyzer_id}/{event}/{id}            │
+│                          MQTT Broker                                    │
+│   {org}/{site}/analytical/flex2-{analyzer_id}/{event}/{id}              │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -437,8 +438,8 @@ These tags provide static or slow-changing reference information useful for enri
 
 | Consumer | Events Subscribed | Filter / Transformation |
 |----------|-------------------|------------------------|
-| Manufacturing Record (PS) | `Sample.Analyzed` | Filter to pH (± pCO₂). Enrich with MES batch context. Write to batch record. |
-| MSAT / Process Development | `Sample.Analyzed` | Filter to VCD, viability, cell diameter. Enrich with process step context. Feed trend analysis. |
+| Manufacturing Record | `Sample.Analyzed` | Filter to required metrics. Enrich with MES batch context. Write to batch record. |
+| MSAT / Process Development | `Sample.Analyzed` | Filter to required metrics. Enrich with process step context. Feed trend analysis. |
 | QC / QA | `Sample.Analyzed`, `QC.Analyzed`, `Parameter.AlertChanged`, `Calibration.StatusChanged` | Full panel. Full instrument state context. Supports disposition and audit readiness. |
 | Data Lake / Historian | All events | No filter. Full payload. Historization and ad-hoc analysis. |
 | Genealogy Graph | All events | Builds traceability links: Sample → active consumable lots, bracketing QC, calibration state, operator. |
@@ -510,6 +511,6 @@ A single `Sample.Analyzed` event connects to the following instrument-state cont
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
-| 0.1 | 2026-04-01 | — | Initial draft. Event set derived from IFU PN 57960 Rev F. OPC tag mapping pending. |
-| 0.2 | 2026-04-01 | — | Incorporated OPC Manual PN 60644 Rev B. Complete OPC tag mapping added. Restructured events around state-vs-event architecture. Identified CSV log supplementary path. Added implementation phases. Consolidated consumable events. |
-| 0.3 | 2026-04-01 | — | Replaced HighByte with Ignition Event Streams as integration layer. Removed ERP/LIMS-specific system references; uses generic MES and LIMS designations. Added LIMS as explicit consumer. |
+| 0.1 | 01APR2026 | — | Initial draft. Event set derived from IFU PN 57960 Rev F. OPC tag mapping pending. |
+| 0.2 | 01APR2026 | — | Incorporated OPC Manual PN 60644 Rev B. Complete OPC tag mapping added. Restructured events around state-vs-event architecture. Identified CSV log supplementary path. Added implementation phases. Consolidated consumable events. |
+| 0.3 | 01APR2026 | — | Replaced HighByte with Ignition Event Streams as integration layer. Removed ERP/LIMS-specific system references; uses generic MES and LIMS designations. Added LIMS as explicit consumer. |
