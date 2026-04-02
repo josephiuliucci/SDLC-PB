@@ -1,0 +1,42 @@
+MicroSensor Card Changes
+
+Replace the pH/Gas MicroSensor Card
+Replace the Chemistry MicroSensor Card
+Monitor the hydration sequence after card installation
+
+Cartridge and Reagent Changes
+
+Replace the pH/Gas Calibrator Cartridge
+Activate and replace the Chemistry Calibrator Cartridge (includes the 2-minute shake to activate)
+Replace the Chemistry Reagent Cartridge (always changed with the Calibrator Cartridge)
+Replace the CDV Bottle Pack and Reagent Cartridge (always changed together, triggers Adjust Intensity)
+Replace the onboard Chemistry QC Cartridge (stored frozen, must be thawed before installation)
+Replace the onboard pH/Gas QC Cartridge
+
+Osmometer Maintenance
+
+Change osmometer tubes (6 clean tubes + wash cup for Osm48, or tubes in positions 1–10 for Osm20)
+Replace the wiper ring (Osm20 only)
+
+Calibration
+
+Initiate manual pH/Gas module calibration
+Initiate manual Chemistry module calibration
+Initiate combined pH/Gas and Chemistry calibration
+
+Quality Control
+
+Run onboard QC (select module and level, initiate analysis)
+Run external QC (enter control ranges from product insert, then analyze)
+
+Pump Tubing
+
+Replace pH/Gas pump tubing harness
+Replace Chemistry pump tubing harness
+
+General
+
+Log in and log out
+Export results and logs to USB or shared folder
+Respond to reagent status alerts (low volume, expired, empty)
+Claim warranty credit when a MicroSensor Card parameter fails calibration three consecutive times
