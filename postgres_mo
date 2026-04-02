@@ -1,0 +1,68 @@
+SELECT
+    -- Manufacturing Order
+    mp.id              AS mo_id,
+    mp.name            AS mo_name,
+    mp.state           AS mo_state,
+    mp.date_start      AS mo_date_start,
+    mp.qty_producing   AS qty_producing,
+    mp.product_qty     AS qty_planned,
+
+    -- Finished Product
+    pp.id              AS product_id,
+    pt.name            AS product_name,
+    pp.default_code    AS product_code,
+
+    -- BOM
+    mb.id              AS bom_id,
+    mb.code            AS bom_reference,
+
+    -- Component (from raw material moves)
+    sm.id              AS move_id,
+    comp_pp.id         AS component_id,
+    comp_pt.name       AS component_name,
+    comp_pp.default_code AS component_code,
+    sm.product_uom_qty AS component_qty_required,
+    uom.name           AS component_uom,
+
+    -- Reserved Lots
+    sml.id             AS move_line_id,
+    sl.id              AS lot_id,
+    sl.name            AS lot_name,
+    sml.quantity        AS lot_qty_reserved,
+
+    -- Work Order / Work Center
+    mw.id              AS workorder_id,
+    mw.name            AS workorder_name,
+    mw.state           AS workorder_state,
+    mw.duration_expected AS workorder_duration_expected,
+    wc.id              AS workcenter_id,
+    wc.name            AS workcenter_name
+
+FROM mrp_production mp
+
+-- Finished product
+JOIN product_product pp ON pp.id = mp.product_id
+JOIN product_template pt ON pt.id = pp.product_tmpl_id
+
+-- BOM
+LEFT JOIN mrp_bom mb ON mb.id = mp.bom_id
+
+-- Raw material moves (components)
+LEFT JOIN stock_move sm
+    ON sm.raw_material_production_id = mp.id
+    AND sm.state != 'cancel'
+LEFT JOIN product_product comp_pp ON comp_pp.id = sm.product_id
+LEFT JOIN product_template comp_pt ON comp_pt.id = comp_pp.product_tmpl_id
+LEFT JOIN uom_uom uom ON uom.id = sm.product_uom
+
+-- Lot reservations on each component move
+LEFT JOIN stock_move_line sml ON sml.move_id = sm.id
+LEFT JOIN stock_lot sl ON sl.id = sml.lot_id
+
+-- Work orders
+LEFT JOIN mrp_workorder mw ON mw.production_id = mp.id
+LEFT JOIN mrp_workcenter wc ON wc.id = mw.workcenter_id
+
+WHERE mp.id = :mo_id
+
+ORDER BY sm.sequence, mw.sequence;
