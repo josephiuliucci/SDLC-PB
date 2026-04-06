@@ -1,0 +1,36 @@
+12-Month POC Success Criteria: Hybrid Digital Twin Platform
+Model Performance
+
+Mechanistic model calibration: At least one unit operation (e.g., bioreactor, chromatography step) modeled with mechanistic first principles that converges on historical batch data within an agreed-upon error tolerance (e.g., ±5% on critical process parameters).
+Statistical model fit: Multivariate models trained on historical batch data demonstrate meaningful predictive power on a held-out validation set — not just training accuracy.
+Hybrid value-add: The combined mechanistic + statistical approach demonstrably outperforms either approach alone on at least one prediction task relevant to your process. If the hybrid doesn't beat a well-tuned statistical model, you need to understand why you're paying for the mechanistic layer.
+
+Data Integration
+
+Connectivity to real process data: The platform successfully ingests data from at least one live or near-live source (historian, LIMS results, MES batch records) without manual CSV uploads becoming the permanent workflow.
+Data reconciliation: The platform handles the messiness of real manufacturing data — missing values, misaligned timestamps, sensor drift, lot/batch ID mapping — without requiring a full-time data janitor.
+Time-to-onboard a new data source: Measured and documented. If adding a second unit operation's data takes as long as the first, the platform isn't learning your environment.
+
+Operational Relevance
+
+At least one actionable prediction: The twin produces a forward-looking output (predicted CQA, yield forecast, deviation risk flag) that a process engineer or MSAT scientist would actually use to make a decision — not just an interesting retrospective chart.
+Scale-up or tech transfer utility: If the mechanistic layer can't help you reason about a process change (new scale, new site, new raw material), it's an expensive curve-fitter.
+Alignment with existing batch genealogy: The twin's concept of a "batch" maps cleanly to your existing lot/batch identity model rather than inventing a parallel universe of run IDs.
+
+Regulatory & Compliance Feasibility
+
+Audit trail and traceability: Model inputs, outputs, version, and parameters are logged in a way that could survive a regulatory question about "how did you arrive at this conclusion."
+Explainability path: For any model-driven recommendation, there's a credible story for how you'd defend it in a filing or inspection — even if the full validation isn't in scope for a POC.
+Data integrity posture: The platform doesn't introduce uncontrolled data transformation steps that break your chain of custody from raw instrument data to model input.
+
+Vendor & Platform Viability
+
+SaaS operational model fit: Latency, uptime, and data residency constraints are compatible with your manufacturing environment. A cloud-round-trip that takes 30 seconds isn't useful for real-time decision support.
+IT/OT security review: The platform passes (or has a clear path to passing) your site's security and network architecture review — particularly around what data leaves your network and how.
+Vendor responsiveness during POC: How fast do they turn around bug fixes, configuration changes, and model updates? POC behavior is the best predictor of production behavior.
+
+Organizational Adoption
+
+At least two engaged end users: Not the project sponsor — actual process scientists or engineers who used the platform more than once without being told to.
+Clear "so what" narrative: By month 12, you can articulate in plain English what the twin told you that you didn't already know, and what you did differently because of it.
+Go/no-go decision framework: Success criteria for the POC itself were agreed upon at the start, not reverse-engineered at the end to justify a predetermined conclusion.
