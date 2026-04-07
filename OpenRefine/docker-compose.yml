@@ -1,0 +1,13 @@
+services:
+  openrefine:
+    image: ghcr.io/openrefine/containers:master
+    platform: linux/amd64
+    container_name: openrefine
+    ports:
+      - "3333:3333"
+    environment:
+      REFINE_MEMORY: "2000M"
+      REFINE_MIN_MEMORY: "2000M"
+    volumes:
+      - ./openrefine-workspace:/workspace
+    restart: unless-stopped
